@@ -71,6 +71,8 @@ const char* eink_goodisplay_config_get_screen_name(const uint8_t* data, uint8_t 
         name = NFC_EINK_SCREEN_GDEY029T94;
     } else if(config->screen_data.screen_resolution == NfcEinkGoodisplayScreenResolution1n54inch) {
         name = NFC_EINK_SCREEN_GDEY0154D67;
+    } else if(config->screen_data.screen_resolution == NfcEinkGoodisplayScreenResolution3n71inch && config->screen_data.screen_channel == NfcEinkGoodisplayScreenChannelBlackWhiteRedYellow) {
+        name = NFC_EINK_SCREEN_GDEM037F51;
     } else if(config->screen_data.screen_resolution == NfcEinkGoodisplayScreenResolution3n71inch) {
         name = NFC_EINK_SCREEN_GDEY037T03;
     }

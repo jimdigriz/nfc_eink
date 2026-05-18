@@ -21,6 +21,7 @@ typedef struct {
 
     uint16_t width;
     uint16_t height;
+    uint8_t bpp;
     uint8_t row_size_bytes;
     const uint8_t* image;
     uint8_t view_image[IMAGE_WINDOW_SIZE_BYTES];
@@ -133,6 +134,7 @@ void image_scroll_reset(ImageScroll* instance) {
     model->pos_y = 0;
     model->width = 0;
     model->height = 0;
+    model->bpp = 0;
     model->row_size_bytes = 0;
 
     model->image_set = false;
@@ -142,6 +144,7 @@ void image_scroll_set_image(
     ImageScroll* instance,
     uint16_t width,
     uint16_t height,
+    uint8_t bpp,
     const uint8_t* image,
     bool invert_image) {
     furi_assert(instance);
@@ -151,6 +154,7 @@ void image_scroll_set_image(
     if(!model->image_set) {
         model->height = height;
         model->width = width;
+        model->bpp = bpp;
         model->invert_image = invert_image;
         model->image = image;
         model->pos_x = 0;

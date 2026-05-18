@@ -17,6 +17,7 @@ Here is the list of displays wich app supports now:
 - GDEY0213B74
 - GDEY029T94
 - GDEY037T03
+- GDEM037F51
 
 # How to use 
 

@@ -25,6 +25,7 @@ void nfc_eink_scene_show_image_on_enter(void* context) {
             scroll,
             info->width,
             info->height,
+            info->bpp,
             nfc_eink_screen_get_image_data(instance->screen),
             instance->settings.invert_image);
     }

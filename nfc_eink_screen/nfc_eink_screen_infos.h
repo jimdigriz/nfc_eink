@@ -33,10 +33,12 @@ typedef enum {
 #define NFC_EINK_SCREEN_GDEY0213B74    "GDEY0213B74"
 #define NFC_EINK_SCREEN_GDEY029T94     "GDEY029T94"
 #define NFC_EINK_SCREEN_GDEY037T03     "GDEY037T03"
+#define NFC_EINK_SCREEN_GDEM037F51     "GDEM037F51"
 
 typedef struct {
     uint16_t width;
     uint16_t height;
+    uint8_t bpp;
     uint8_t data_block_size;
     uint32_t protocol_type_field;
     NfcEinkScreenSize screen_size;

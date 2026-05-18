@@ -15,6 +15,7 @@
 #define NFC_EINK_SCREEN_NAME_KEY              "Screen name"
 #define NFC_EINK_SCREEN_WIDTH_KEY             "Width"
 #define NFC_EINK_SCREEN_HEIGHT_KEY            "Height"
+#define NFC_EINK_SCREEN_BPP_KEY               "Bits per pixel"
 #define NFC_EINK_SCREEN_DATA_BLOCK_SIZE_KEY   "Data block size"
 #define NFC_EINK_SCREEN_DATA_TOTAL_KEY        "Data total"
 #define NFC_EINK_SCREEN_BLOCK_DATA_KEY        "Block"
@@ -64,7 +65,7 @@ NfcEinkScreen* nfc_eink_screen_alloc(NfcEinkManufacturer manufacturer) {
 
 static inline uint16_t nfc_eink_screen_calculate_image_size(const NfcEinkScreenInfo* const info) {
     furi_assert(info);
-    return info->width * (info->height % 8 == 0 ? (info->height / 8) : (info->height / 8 + 1));
+    return info->bpp * info->width * (info->height % 8 == 0 ? (info->height / 8) : (info->height / 8 + 1));
 }
 
 static bool nfc_eink_screen_init_internal(NfcEinkScreen* screen) {
@@ -221,6 +222,10 @@ bool nfc_eink_screen_load_info(const char* file_path, const NfcEinkScreenInfo** 
         uint32_t height = 0;
         if(!flipper_format_read_uint32(ff, NFC_EINK_SCREEN_HEIGHT_KEY, &height, 1)) break;
 
+        // backwards compatibility
+        uint32_t bpp = 0;
+        flipper_format_read_uint32(ff, NFC_EINK_SCREEN_BPP_KEY, &bpp, 1);
+
         const NfcEinkScreenInfo* inf_tmp = nfc_eink_descriptor_get_by_name(name);
         if(!inf_tmp) {
             FURI_LOG_E(TAG, "Screen %s was not found", furi_string_get_cstr(name));
@@ -232,7 +237,7 @@ bool nfc_eink_screen_load_info(const char* file_path, const NfcEinkScreenInfo** 
             break;
         }
 
-        if(inf_tmp->width != width || inf_tmp->height != height) {
+        if(inf_tmp->width != width || inf_tmp->height != height || (bpp > 0 && inf_tmp->bpp != bpp)) {
             FURI_LOG_E(TAG, "Loaded screen size doesn't match with info field");
             break;
         }
@@ -379,6 +384,10 @@ bool nfc_eink_screen_save(const NfcEinkScreen* screen, const char* file_path) {
         // Write screen height
         buf = screen->data->base.height;
         if(!flipper_format_write_uint32(ff, NFC_EINK_SCREEN_HEIGHT_KEY, &buf, 1)) break;
+
+        // Write bits per pixel
+        buf = screen->data->base.bpp;
+        if(!flipper_format_write_uint32(ff, NFC_EINK_SCREEN_BPP_KEY, &buf, 1)) break;
 
         // Write data block size
         furi_string_printf(

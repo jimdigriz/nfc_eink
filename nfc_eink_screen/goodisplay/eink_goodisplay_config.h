@@ -11,6 +11,7 @@ typedef enum {
 typedef enum {
     NfcEinkGoodisplayScreenChannelBlackWhite = 0x20,
     NfcEinkGoodisplayScreenChannelBlackWhiteRed = 0x30,
+    NfcEinkGoodisplayScreenChannelBlackWhiteRedYellow = 0x40,
 } NfcEinkGoodisplayScreenChannel;
 
 typedef struct {

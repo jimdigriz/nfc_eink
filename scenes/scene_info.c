@@ -25,7 +25,7 @@ void nfc_eink_scene_info_on_enter(void* context) {
         temp_str,
         "Vendor: %s\n",
         nfc_eink_screen_get_manufacturer_name(info->screen_manufacturer));
-    furi_string_cat_printf(temp_str, "Resolution: %d x %d\n", info->width, info->height);
+    furi_string_cat_printf(temp_str, "Resolution: %d x %d x %dbpp\n", info->width, info->height, info->bpp);
 
     furi_string_cat_printf(
         temp_str, "Size: %d bytes\n", nfc_eink_screen_get_image_size(instance->screen));

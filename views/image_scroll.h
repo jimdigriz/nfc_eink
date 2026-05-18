@@ -14,5 +14,6 @@ void image_scroll_set_image(
     ImageScroll* instance,
     uint16_t width,
     uint16_t height,
+    uint8_t bpp,
     const uint8_t* image,
     bool invert_image);
